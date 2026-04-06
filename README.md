@@ -121,6 +121,38 @@ sudo nixos-rebuild switch --flake ~/projects/nixmigrate#nixpc
 | **VM management** | Open virt-manager; luke is in the `libvirtd` group (no sudo needed) |
 | **Claude Code** | Installed via nixpkgs (`claude-code` package) |
 
+### Backups (rclone + Backblaze B2)
+
+The backup script and nightly timer are installed by the config, but the rclone credentials must be restored manually from Bitwarden — they are intentionally not in this repo.
+
+**Step 1: Restore rclone config from Bitwarden**
+
+```bash
+mkdir -p ~/.config/rclone
+# Copy the saved rclone.conf from Bitwarden to:
+# ~/.config/rclone/rclone.conf
+```
+
+**Step 2: Verify the connection**
+
+```bash
+rclone lsf vault: --max-depth 1
+```
+
+**Step 3: Enable the nightly timer**
+
+```bash
+systemctl --user enable --now rclone-backup.timer
+```
+
+**Step 4: Confirm everything works**
+
+```bash
+~/backup_home.sh --dry-run
+```
+
+The timer runs nightly at midnight. If the machine is off at midnight, it will catch up and run on next boot (`Persistent = true`).
+
 ## Key Design Decisions
 
 - **nixos-unstable channel** — Latest Mesa, Steam, and GPU patches for gaming
