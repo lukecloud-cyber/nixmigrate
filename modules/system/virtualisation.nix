@@ -21,7 +21,4 @@
     dockerCompat = true;   # Allows `docker` CLI to route through Podman
     defaultNetwork.settings.dns_enabled = true;
   };
-
-  # luke must be in the libvirtd group to manage VMs without sudo
-  users.users.luke.extraGroups = [ "libvirtd" ];
 }

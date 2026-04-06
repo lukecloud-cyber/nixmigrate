@@ -1,7 +1,10 @@
 { config, pkgs, ... }: {
   networking = {
-    hostName = "nixpc";
-    networkmanager.enable = true;
+    hostName = "nixpc";  # Update to your actual hostname
+    networkmanager = {
+      enable = true;
+      dns = "systemd-resolved";  # Delegate DNS to systemd-resolved via stub resolver
+    };
     firewall.enable = true;
   };
 
