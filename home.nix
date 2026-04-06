@@ -4,6 +4,7 @@
     ./modules/home/cli.nix
     ./modules/home/dev.nix
     ./modules/home/apps.nix
+    ./modules/home/backup.nix
   ];
 
   home.username = "luke";

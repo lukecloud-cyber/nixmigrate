@@ -22,6 +22,9 @@ modules/
     cli.nix                        # eza, bat, fd, ripgrep, and other CLI tools
     dev.nix                        # neovim, git, gh, glab, shellcheck, node, python, uv, claude-code
     apps.nix                       # GUI apps: Firefox, Bitwarden, Obsidian, GIMP, OBS, etc.
+    backup.nix                     # rclone + Backblaze B2 backup, exclude list, nightly systemd timer
+scripts/
+  backup_home.sh                   # Backup script (managed by backup.nix, placed at ~/backup_home.sh)
 ```
 
 ## Applying Changes
