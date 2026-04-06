@@ -5,6 +5,7 @@
     ./modules/system/desktop.nix
     ./modules/system/audio.nix
     ./modules/system/gaming.nix
+    ./modules/system/virtualisation.nix
   ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
