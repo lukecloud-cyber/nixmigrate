@@ -1,3 +1,16 @@
+# Nix build outputs
 result
 result-*
-.direnv
+
+# Direnv
+.direnv/
+.envrc
+
+# Language server cache
+.nixd/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
