@@ -2,11 +2,15 @@
   # X server base (required even for Wayland sessions on NixOS)
   services.xserver.enable = true;
 
-  # SDDM display manager — shows both KDE and Hyprland as login options
+  # SDDM display manager — shows both KDE and Hyprland as selectable sessions
   services.displayManager.sddm = {
     enable = true;
-    wayland.enable = true;
+    # wayland.enable runs the SDDM greeter itself in Wayland (experimental).
+    # Omitted here — KDE and Hyprland sessions are still Wayland regardless.
   };
+
+  # Default session shown pre-selected at SDDM login
+  services.displayManager.defaultSession = "plasma";
 
   # KDE Plasma 6
   services.desktopManager.plasma6.enable = true;
@@ -15,19 +19,18 @@
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
+    withUWSM = true;  # Proper systemd session integration (graphical-session.target etc.)
   };
-
-  # XWayland for legacy X11 app compatibility under KDE too
-  programs.xwayland.enable = true;
 
   # Flatpak daemon
   services.flatpak.enable = true;
 
-  # Add Flathub remote on first boot (idempotent — safe to run repeatedly)
+  # Add Flathub remote on first boot (system-wide, idempotent)
+  # Note: runs as root, adds remote for all users on the machine.
   systemd.services.flatpak-add-flathub = {
     description = "Add Flathub remote for Flatpak";
     wantedBy = [ "multi-user.target" ];
-    after = [ "network-online.target" "flatpak.service" ];
+    after = [ "network-online.target" ];
     wants = [ "network-online.target" ];
     serviceConfig = {
       Type = "oneshot";
@@ -36,16 +39,21 @@
     };
   };
 
-  # KDE Discover with Flatpak backend (GUI Flathub browser, replaces Bazzite Bazaar)
+  # KDE Discover — GUI frontend for Flatpak/Flathub (replaces Bazzite Bazaar)
   environment.systemPackages = with pkgs; [
     kdePackages.discover
-    libportal
-    xdg-desktop-portal-kde
   ];
 
-  # XDG portal — needed for Flatpak app integration with the desktop
+  # XDG portals — screen sharing, file pickers, screenshots per session
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-kde ];
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-kde       # For KDE Plasma sessions
+      xdg-desktop-portal-hyprland  # For Hyprland sessions
+    ];
+    config = {
+      KDE = { default = [ "kde" ]; };
+      hyprland = { default = [ "hyprland" ]; };
+    };
   };
 }
