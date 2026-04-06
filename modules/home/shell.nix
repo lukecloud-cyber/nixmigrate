@@ -12,15 +12,12 @@
     keyMode = "vi";
     prefix = "C-a";
     terminal = "tmux-256color";
+    tmuxinator.enable = true;
     plugins = with pkgs.tmuxPlugins; [
       sensible
       yank
     ];
   };
-
-  home.packages = with pkgs; [
-    tmuxinator
-  ];
 
   programs.starship = {
     enable = true;
@@ -43,6 +40,7 @@
 
   programs.direnv = {
     enable = true;
+    enableFishIntegration = true;
     nix-direnv.enable = true;
   };
 }
