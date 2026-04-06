@@ -2,6 +2,7 @@
   imports = [
     ./hardware-configuration.nix
     ./modules/system/hardware.nix
+    ./modules/system/desktop.nix
   ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
