@@ -44,7 +44,7 @@ in
 
   # ── VM boot: BIOS GRUB (override the EFI defaults from boot.nix) ────
   boot.loader.efi.canTouchEfiVariables = lib.mkForce false;
-  boot.loader.grub.device = lib.mkForce "/dev/sda";
+  boot.loader.grub.device = lib.mkForce "/dev/vda";
   boot.loader.grub.efiSupport = lib.mkForce false;
   boot.loader.grub.useOSProber = lib.mkForce false;
 
