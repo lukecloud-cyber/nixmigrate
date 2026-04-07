@@ -64,7 +64,7 @@ scripts/
 
 ### Phase 1: Install NixOS with the Graphical Installer
 
-Boot the NixOS ISO and run through the graphical installer normally (partition disks, create your user account, etc.). Reboot when finished.
+Boot the NixOS ISO and run through the graphical installer normally (partition disks, create your user account, etc.). **Use a different username than `luke`** (e.g. `install` or the default) — the flake will create the `luke` account with the correct config in Phase 2. Reboot when finished.
 
 ### Phase 2: Apply Your Flake Config
 
@@ -99,7 +99,13 @@ Reboot to pick up all changes (new user, bootloader, services, etc.).
 
 ### Phase 3: Permanent Setup
 
-After rebooting, log in as `luke` (password: `changeme` — change it with `passwd`). Clone the repo to your permanent home location and commit the real hardware config:
+After rebooting, log in as `luke` (password: `changeme`). Change your password immediately:
+
+```bash
+passwd
+```
+
+Then clone the repo to your permanent home location and commit the real hardware config:
 
 **For nixpc:**
 
