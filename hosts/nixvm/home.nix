@@ -1,10 +1,9 @@
 { config, pkgs, ... }: {
   imports = [
-    ./modules/home/shell.nix
-    ./modules/home/cli.nix
-    ./modules/home/dev.nix
-    ./modules/home/apps.nix
-    ./modules/home/backup.nix
+    ../../modules/home/shell.nix
+    ../../modules/home/cli.nix
+    ../../modules/home/dev.nix
+    ../../modules/home/apps.nix
   ];
 
   home.username = "luke";

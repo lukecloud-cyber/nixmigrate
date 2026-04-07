@@ -39,21 +39,26 @@
     };
   };
 
+  # Hint Electron apps (Vesktop, Obsidian, Bitwarden, etc.) to use Wayland
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
   # KDE Discover — GUI frontend for Flatpak/Flathub (replaces Bazzite Bazaar)
   environment.systemPackages = with pkgs; [
     kdePackages.discover
+    kitty  # Default terminal in Hyprland's built-in keybinds
   ];
 
   # XDG portals — screen sharing, file pickers, screenshots per session
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
-      xdg-desktop-portal-kde       # For KDE Plasma sessions
-      xdg-desktop-portal-hyprland  # For Hyprland sessions
+      xdg-desktop-portal-kde  # For KDE Plasma sessions
+      xdg-desktop-portal-gtk  # File picker fallback (XDPH doesn't implement one)
+      # xdg-desktop-portal-hyprland is added automatically by programs.hyprland.enable
     ];
     config = {
       KDE = { default = [ "kde" ]; };
-      hyprland = { default = [ "hyprland" ]; };
+      hyprland = { default = [ "hyprland" "gtk" ]; };
     };
   };
 }

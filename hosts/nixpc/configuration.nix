@@ -1,12 +1,12 @@
 { config, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
-    ./modules/system/hardware.nix
-    ./modules/system/desktop.nix
-    ./modules/system/audio.nix
-    ./modules/system/gaming.nix
-    ./modules/system/virtualisation.nix
-    ./modules/system/network.nix
+    ../../modules/system/hardware.nix
+    ../../modules/system/desktop.nix
+    ../../modules/system/audio.nix
+    ../../modules/system/gaming.nix
+    ../../modules/system/virtualisation.nix
+    ../../modules/system/network.nix
   ];
 
   # Bootloader (EFI — change to boot.loader.grub if your machine uses BIOS)
