@@ -36,5 +36,6 @@
     uv          # Fast Python package/project manager
     claude-code # Agentic coding tool (Anthropic)
     gemini-cli  # Google Gemini AI in the terminal
+    mcp-nixos   # MCP server for NixOS
   ];
 }
