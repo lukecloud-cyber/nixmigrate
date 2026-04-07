@@ -13,9 +13,9 @@ NixOS flake managing two hosts: a bare-metal AMD workstation (`nixpc`) and a QEM
 sudo nixos-rebuild switch --flake ~/projects/nixmigrate#nixpc
 sudo nixos-rebuild switch --flake ~/projects/nixmigrate#nixvm
 
-# Apply HyDE (Hyprland) variant instead
-sudo nixos-rebuild switch --flake ~/projects/nixmigrate/nixhyde#nixpc-hyde
-sudo nixos-rebuild switch --flake ~/projects/nixmigrate/nixhyde#nixvm-hyde
+# Apply Sly-Harvey Hyprland rice instead
+sudo nixos-rebuild switch --flake ~/projects/nixmigrate/slyhypr#nixpc
+sudo nixos-rebuild switch --flake ~/projects/nixmigrate/slyhypr#nixvm
 
 # Update flake inputs to latest
 nix flake update
@@ -42,7 +42,7 @@ nix flake check
 
 Both hosts share the same module tree. The VM (`nixvm`) omits `hardware.nix`, `gaming.nix`, `virtualisation.nix`, and `backup.nix`. Host-specific differences are controlled by which modules each host's `configuration.nix` and `home.nix` import.
 
-**Standalone HyDE flake** (`nixhyde/`): Self-contained flake using [hydenix](https://github.com/richen604/hydenix) for a pre-riced Hyprland desktop. Defines `nixpc-hyde` and `nixvm-hyde` configurations with their own `*-configuration.nix` and `*-home.nix` files. Shares `dotfiles/` and `scripts/` from the parent directory.
+**Standalone Sly-Harvey flake** (`slyhypr/`): Self-contained flake forked from [Sly-Harvey/NixOS](https://github.com/Sly-Harvey/NixOS) providing a fully-riced Hyprland desktop with Catppuccin theming, waybar, rofi, hyprlock, and custom scripts. Has its own `hosts/nixvm/` and `hosts/nixpc/` with `variables.nix` files that control desktop, bar, terminal, editor, browser, and GPU driver. KDE Plasma 6 is enabled alongside Hyprland as a fallback session.
 
 **Dotfiles** (`dotfiles/`): Files placed into `~` by Home Manager (currently LazyVim config at `dotfiles/nvim/`).
 

@@ -1,6 +1,6 @@
 # nixmigrate — NixOS Configurations
 
-NixOS flake managing two hosts: a bare-metal workstation (`nixpc`) and a QEMU/KVM virtual machine (`nixvm`). A standalone flake (`nixhyde`) is also included for an alternative HyDE-based Hyprland desktop on the workstation. Authored on Bazzite, applied via `nixos-rebuild switch` after installing NixOS on the target machine.
+NixOS flake managing two hosts: a bare-metal workstation (`nixpc`) and a QEMU/KVM virtual machine (`nixvm`). A standalone flake (`slyhypr`) provides a riced Hyprland desktop based on [Sly-Harvey/NixOS](https://github.com/Sly-Harvey/NixOS). Authored on Bazzite, applied via `nixos-rebuild switch` after installing NixOS on the target machine.
 
 ## Hosts
 
@@ -11,14 +11,14 @@ NixOS flake managing two hosts: a bare-metal workstation (`nixpc`) and a QEMU/KV
 
 Both hosts share the same desktop environment (KDE Plasma 6 + Hyprland via SDDM), shell setup, CLI tools, dev tools, and GUI apps. The VM omits hardware-specific and gaming modules.
 
-### Standalone Flake: nixhyde
+### Standalone Flake: slyhypr
 
 | Host | Target | Desktop | Extras |
 |------|--------|---------|--------|
-| `nixpc-hyde` | Bare-metal AMD workstation | [HyDE](https://github.com/richen604/hydenix) (Hyprland) | Catppuccin Mocha theme, AMD GPU, Steam, Gamescope, libvirtd, Podman, rclone backup |
-| `nixvm-hyde` | QEMU/KVM virtual machine | [HyDE](https://github.com/richen604/hydenix) (Hyprland) | Catppuccin Mocha theme, SPICE agent, QEMU guest agent (no GPU drivers, gaming, or virtualisation) |
+| `nixpc` | Bare-metal AMD workstation | [Sly-Harvey Hyprland](https://github.com/Sly-Harvey/NixOS) | Catppuccin theme, waybar stylish, AMD GPU, Steam, Gamescope, KDE Plasma fallback |
+| `nixvm` | QEMU/KVM virtual machine | [Sly-Harvey Hyprland](https://github.com/Sly-Harvey/NixOS) | Catppuccin theme, waybar stylish, 1920x1200 display, KDE Plasma fallback, SPICE agent |
 
-`nixhyde/` is a self-contained flake that replaces the main flake's KDE+Hyprland desktop with HyDE (a pre-riced Hyprland setup via the [hydenix](https://github.com/richen604/hydenix) module). It has host-specific configs for both nixpc and nixvm — apply with `nixos-rebuild switch --flake ~/projects/nixmigrate/nixhyde#nixpc-hyde` or `#nixvm-hyde`.
+`slyhypr/` is a self-contained flake forked from [Sly-Harvey/NixOS](https://github.com/Sly-Harvey/NixOS) that provides a fully-riced Hyprland desktop with Catppuccin theming, waybar, rofi, hyprlock, and custom scripts. KDE Plasma 6 is enabled alongside Hyprland as a fallback (selectable at SDDM login). Apply with `nixos-rebuild switch --flake ~/projects/nixmigrate/slyhypr#nixvm` or `#nixpc`.
 
 ## Structure
 
@@ -51,12 +51,11 @@ dotfiles/
   nvim/                                # LazyVim starter config (placed at ~/.config/nvim by home-manager)
 scripts/
   backup_home.sh                       # Backup script (managed by backup.nix, placed at ~/backup_home.sh)
-nixhyde/                               # Standalone flake — HyDE (Hyprland) desktop for nixpc and nixvm
-  flake.nix                            # Pins nixpkgs-unstable + home-manager + hydenix + mcp-nixos (both hosts)
-  nixpc-configuration.nix              # System config — hydenix, AMD GPU, gaming, virtualisation
-  nixpc-home.nix                       # Home Manager config — HyDE rice, shell, CLI, dev, apps, backup
-  nixvm-configuration.nix              # System config — hydenix, SPICE/QEMU agents (no GPU/gaming/virt)
-  nixvm-home.nix                       # Home Manager config — HyDE rice, shell, CLI, dev, apps (no backup)
+slyhypr/                               # Standalone flake — Sly-Harvey Hyprland rice for nixpc and nixvm
+  flake.nix                            # Pins nixpkgs-unstable + home-manager + many inputs (nixvim, spicetify, etc.)
+  hosts/nixvm/                         # VM host — BIOS GRUB, SPICE agents, 1920x1200, KDE fallback
+  hosts/nixpc/                         # PC host — AMD GPU, gaming, virtualisation, KDE fallback
+  modules/                             # Full Sly-Harvey module tree (core, desktop, programs, themes, scripts)
 ```
 
 ### What each host includes
@@ -178,9 +177,9 @@ Update any personal details that weren't changed before install:
 sudo nixos-rebuild switch --flake ~/projects/nixmigrate#nixpc
 sudo nixos-rebuild switch --flake ~/projects/nixmigrate#nixvm
 
-# Apply the HyDE variant instead (pick your host)
-sudo nixos-rebuild switch --flake ~/projects/nixmigrate/nixhyde#nixpc-hyde
-sudo nixos-rebuild switch --flake ~/projects/nixmigrate/nixhyde#nixvm-hyde
+# Apply the Sly-Harvey Hyprland rice instead (pick your host)
+sudo nixos-rebuild switch --flake ~/projects/nixmigrate/slyhypr#nixpc
+sudo nixos-rebuild switch --flake ~/projects/nixmigrate/slyhypr#nixvm
 
 # Update all inputs to latest nixpkgs-unstable commit
 nix flake update
@@ -211,9 +210,9 @@ Your `~/projects/nixmigrate/` folder is the **source code** for your system, not
 | **Proton-GE** (nixpc only) | Open ProtonUp-Qt (included) to install custom Proton versions |
 | **Login sessions** | SDDM shows both KDE Plasma and Hyprland — KDE is pre-selected |
 | **VM management** (nixpc only) | Open virt-manager; luke is in the `libvirtd` group (no sudo needed) |
-| **Claude Code** | Installed via nixpkgs (`claude-code` package). Global settings (`~/.claude/settings.json`) managed by Home Manager via `dev.nix`. Project-level MCP servers configured in `.mcp.json` at the repo root (and `nixhyde/.mcp.json`). |
+| **Claude Code** | Installed via nixpkgs (`claude-code` package). Global settings (`~/.claude/settings.json`) managed by Home Manager via `dev.nix`. Project-level MCP servers configured in `.mcp.json` at the repo root. |
 | **Gemini CLI** | Installed via nixpkgs (`gemini-cli` package). Global settings (`~/.gemini/settings.json`) managed by Home Manager via `dev.nix`, including MCP server config for `mcp-nixos`. |
-| **MCP servers** | [mcp-nixos](https://github.com/utensils/mcp-nixos) is added as a flake input in both `flake.nix` and `nixhyde/flake.nix`. It provides NixOS package, option, and version context to AI tools. Configured globally for Gemini (via Home Manager) and per-project for Claude (via `.mcp.json`). |
+| **MCP servers** | [mcp-nixos](https://github.com/utensils/mcp-nixos) is added as a flake input in `flake.nix`. It provides NixOS package, option, and version context to AI tools. Configured globally for Gemini (via Home Manager) and per-project for Claude (via `.mcp.json`). |
 | **Neovim / LazyVim** | Config is placed by home-manager. Open `nvim` after first rebuild — plugins download automatically on first launch (needs internet). Customize via `dotfiles/nvim/lua/plugins/`. |
 
 ### Backups — rclone + Backblaze B2 (nixpc only)
@@ -259,5 +258,5 @@ The timer runs nightly at midnight. If the machine is off at midnight, it will c
 - **Dual desktop** — KDE Plasma 6 as the daily driver, Hyprland available as an alternative session
 - **UWSM for Hyprland** — Proper systemd session integration via `graphical-session.target`
 - **Shared modules** — Both hosts pull from the same `modules/` tree; host-specific differences live in `hosts/*/configuration.nix`
-- **nixhyde standalone flake** — Alternative desktop config using [HyDE/hydenix](https://github.com/richen604/hydenix) for a pre-riced Hyprland experience; self-contained in `nixhyde/` with its own flake inputs
-- **AI tool configs via Home Manager** — Global settings for Claude Code and Gemini CLI (including MCP server definitions) are declared in `dev.nix` and the nixhyde home configs, so they stay in sync across rebuilds and hosts
+- **slyhypr standalone flake** — Alternative desktop config forked from [Sly-Harvey/NixOS](https://github.com/Sly-Harvey/NixOS) for a fully-riced Hyprland experience; self-contained in `slyhypr/` with its own flake inputs, modules, and host configs
+- **AI tool configs via Home Manager** — Global settings for Claude Code and Gemini CLI (including MCP server definitions) are declared in `dev.nix`, so they stay in sync across rebuilds and hosts
