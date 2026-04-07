@@ -15,5 +15,4 @@
   xdg.configFile."user-dirs.dirs".force = true;
   xdg.configFile."baloofilerc".force = true;
   xdg.configFile."mimeapps.list".force = true;
-  home.file.".local/share/applications/mimeapps.list".force = true;
 }

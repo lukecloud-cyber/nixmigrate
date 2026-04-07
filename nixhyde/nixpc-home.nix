@@ -95,15 +95,26 @@
     recursive = true;
   };
 
+  # Force-overwrite files that conflict with existing unmanaged copies
+  xdg.configFile."user-dirs.dirs".force = true;
+  home.file.".config/baloofilerc".force = true;  # hydenix defines this via home.file, not xdg.configFile
+  xdg.configFile."mimeapps.list".force = true;
+
   # ── AI tool configs ──────────────────────────────────────────────────
-  home.file.".claude/settings.json".text = builtins.toJSON {
-    skipDangerousModePermissionPrompt = true;
+  home.file.".claude/settings.json" = {
+    force = true;
+    text = builtins.toJSON {
+      skipDangerousModePermissionPrompt = true;
+    };
   };
 
-  home.file.".gemini/settings.json".text = builtins.toJSON {
-    mcpServers = {
-      nixos = {
-        command = "${inputs.mcp-nixos.packages.${pkgs.system}.default}/bin/mcp-nixos";
+  home.file.".gemini/settings.json" = {
+    force = true;
+    text = builtins.toJSON {
+      mcpServers = {
+        nixos = {
+          command = "${inputs.mcp-nixos.packages.${pkgs.system}.default}/bin/mcp-nixos";
+        };
       };
     };
   };
