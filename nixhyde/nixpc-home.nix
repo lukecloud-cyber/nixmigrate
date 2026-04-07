@@ -95,6 +95,19 @@
     recursive = true;
   };
 
+  # ── AI tool configs ──────────────────────────────────────────────────
+  home.file.".claude/settings.json".text = builtins.toJSON {
+    skipDangerousModePermissionPrompt = true;
+  };
+
+  home.file.".gemini/settings.json".text = builtins.toJSON {
+    mcpServers = {
+      nixos = {
+        command = "${inputs.mcp-nixos.packages.${pkgs.system}.default}/bin/mcp-nixos";
+      };
+    };
+  };
+
   # ── CLI tools ───────────────────────────────────────────────────────
   home.packages = with pkgs; [
     # Modern CLI replacements
@@ -116,7 +129,7 @@
     uv
     claude-code
     gemini-cli
-    mcp-nixos
+    inputs.mcp-nixos.packages.${pkgs.system}.default
 
     # Gaming extras
     protontricks

@@ -14,6 +14,9 @@
       # Let hydenix use its own pinned nixpkgs for its overlay/packages,
       # but our system-level nixpkgs stays on nixos-unstable.
     };
+
+    # MCP server for NixOS (packages, options, versions)
+    mcp-nixos.url = "github:utensils/mcp-nixos";
   };
 
   outputs = { self, nixpkgs, home-manager, hydenix, ... }@inputs: {
