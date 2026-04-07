@@ -23,7 +23,7 @@ Both hosts share the same desktop environment (KDE Plasma 6 + Hyprland via SDDM)
 ## Structure
 
 ```
-flake.nix                              # Entry point — pins nixpkgs-unstable + home-manager
+flake.nix                              # Entry point — pins nixpkgs-unstable + home-manager + mcp-nixos
 hosts/
   nixpc/
     configuration.nix                  # System root — Zen kernel, boot, user, nix settings
@@ -44,7 +44,7 @@ modules/
   home/
     shell.nix                          # fish, tmux, starship, atuin, zoxide, direnv
     cli.nix                            # eza, bat, fd, ripgrep, fastfetch, and other CLI tools
-    dev.nix                            # neovim + LazyVim, git, gh, glab, shellcheck, node, python, uv, claude-code, gemini-cli
+    dev.nix                            # neovim + LazyVim, git, gh, glab, shellcheck, node, python, uv, claude-code, gemini-cli, MCP configs
     apps.nix                           # GUI apps: Firefox, Bitwarden, Obsidian, GIMP, OBS, etc.
     backup.nix                         # rclone + Backblaze B2 backup, nightly systemd timer (nixpc only)
 dotfiles/
@@ -52,7 +52,7 @@ dotfiles/
 scripts/
   backup_home.sh                       # Backup script (managed by backup.nix, placed at ~/backup_home.sh)
 nixhyde/                               # Standalone flake — HyDE (Hyprland) desktop for nixpc and nixvm
-  flake.nix                            # Pins nixpkgs-unstable + home-manager + hydenix (both hosts)
+  flake.nix                            # Pins nixpkgs-unstable + home-manager + hydenix + mcp-nixos (both hosts)
   nixpc-configuration.nix              # System config — hydenix, AMD GPU, gaming, virtualisation
   nixpc-home.nix                       # Home Manager config — HyDE rice, shell, CLI, dev, apps, backup
   nixvm-configuration.nix              # System config — hydenix, SPICE/QEMU agents (no GPU/gaming/virt)
@@ -211,7 +211,9 @@ Your `~/projects/nixmigrate/` folder is the **source code** for your system, not
 | **Proton-GE** (nixpc only) | Open ProtonUp-Qt (included) to install custom Proton versions |
 | **Login sessions** | SDDM shows both KDE Plasma and Hyprland — KDE is pre-selected |
 | **VM management** (nixpc only) | Open virt-manager; luke is in the `libvirtd` group (no sudo needed) |
-| **Claude Code** | Installed via nixpkgs (`claude-code` package) |
+| **Claude Code** | Installed via nixpkgs (`claude-code` package). Global settings (`~/.claude/settings.json`) managed by Home Manager via `dev.nix`. Project-level MCP servers configured in `.mcp.json` at the repo root (and `nixhyde/.mcp.json`). |
+| **Gemini CLI** | Installed via nixpkgs (`gemini-cli` package). Global settings (`~/.gemini/settings.json`) managed by Home Manager via `dev.nix`, including MCP server config for `mcp-nixos`. |
+| **MCP servers** | [mcp-nixos](https://github.com/utensils/mcp-nixos) is added as a flake input in both `flake.nix` and `nixhyde/flake.nix`. It provides NixOS package, option, and version context to AI tools. Configured globally for Gemini (via Home Manager) and per-project for Claude (via `.mcp.json`). |
 | **Neovim / LazyVim** | Config is placed by home-manager. Open `nvim` after first rebuild — plugins download automatically on first launch (needs internet). Customize via `dotfiles/nvim/lua/plugins/`. |
 
 ### Backups — rclone + Backblaze B2 (nixpc only)
@@ -258,3 +260,4 @@ The timer runs nightly at midnight. If the machine is off at midnight, it will c
 - **UWSM for Hyprland** — Proper systemd session integration via `graphical-session.target`
 - **Shared modules** — Both hosts pull from the same `modules/` tree; host-specific differences live in `hosts/*/configuration.nix`
 - **nixhyde standalone flake** — Alternative desktop config using [HyDE/hydenix](https://github.com/richen604/hydenix) for a pre-riced Hyprland experience; self-contained in `nixhyde/` with its own flake inputs
+- **AI tool configs via Home Manager** — Global settings for Claude Code and Gemini CLI (including MCP server definitions) are declared in `dev.nix` and the nixhyde home configs, so they stay in sync across rebuilds and hosts
