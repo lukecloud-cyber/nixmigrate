@@ -1,5 +1,5 @@
 {
-  description = "NixOS + HyDE (Hyprland) — nixpc with hydenix desktop";
+  description = "NixOS + HyDE (Hyprland) — nixpc and nixvm with hydenix desktop";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -26,7 +26,7 @@
         hydenix.nixosModules.default
 
         # Our system configuration
-        ./configuration.nix
+        ./nixpc-configuration.nix
 
         # Home Manager as a NixOS module
         home-manager.nixosModules.home-manager
@@ -34,7 +34,28 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = { inherit inputs; };
-          home-manager.users.luke = import ./home.nix;
+          home-manager.users.luke = import ./nixpc-home.nix;
+        }
+      ];
+    };
+
+    nixosConfigurations.nixvm-hyde = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inherit inputs; };
+      modules = [
+        # Hydenix system modules (SDDM, Hyprland, PipeWire, boot, etc.)
+        hydenix.nixosModules.default
+
+        # Our system configuration
+        ./nixvm-configuration.nix
+
+        # Home Manager as a NixOS module
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = { inherit inputs; };
+          home-manager.users.luke = import ./nixvm-home.nix;
         }
       ];
     };

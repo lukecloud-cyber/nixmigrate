@@ -1,6 +1,6 @@
 # nixmigrate — NixOS Configurations
 
-NixOS flake managing two hosts: a bare-metal workstation (`nixpc`) and a QEMU/KVM virtual machine (`nixvm`). Authored on Bazzite, applied via `nixos-rebuild switch` after installing NixOS on the target machine.
+NixOS flake managing two hosts: a bare-metal workstation (`nixpc`) and a QEMU/KVM virtual machine (`nixvm`). A standalone flake (`nixhyde`) is also included for an alternative HyDE-based Hyprland desktop on the workstation. Authored on Bazzite, applied via `nixos-rebuild switch` after installing NixOS on the target machine.
 
 ## Hosts
 
@@ -10,6 +10,15 @@ NixOS flake managing two hosts: a bare-metal workstation (`nixpc`) and a QEMU/KV
 | `nixvm` | QEMU/KVM virtual machine | Default nixpkgs | SPICE agent, QEMU guest agent (no GPU drivers, gaming, or virtualisation) |
 
 Both hosts share the same desktop environment (KDE Plasma 6 + Hyprland via SDDM), shell setup, CLI tools, dev tools, and GUI apps. The VM omits hardware-specific and gaming modules.
+
+### Standalone Flake: nixhyde
+
+| Host | Target | Desktop | Extras |
+|------|--------|---------|--------|
+| `nixpc-hyde` | Bare-metal AMD workstation | [HyDE](https://github.com/richen604/hydenix) (Hyprland) | Catppuccin Mocha theme, AMD GPU, Steam, Gamescope, libvirtd, Podman, rclone backup |
+| `nixvm-hyde` | QEMU/KVM virtual machine | [HyDE](https://github.com/richen604/hydenix) (Hyprland) | Catppuccin Mocha theme, SPICE agent, QEMU guest agent (no GPU drivers, gaming, or virtualisation) |
+
+`nixhyde/` is a self-contained flake that replaces the main flake's KDE+Hyprland desktop with HyDE (a pre-riced Hyprland setup via the [hydenix](https://github.com/richen604/hydenix) module). It has host-specific configs for both nixpc and nixvm — apply with `nixos-rebuild switch --flake ~/projects/nixmigrate/nixhyde#nixpc-hyde` or `#nixvm-hyde`.
 
 ## Structure
 
@@ -42,6 +51,12 @@ dotfiles/
   nvim/                                # LazyVim starter config (placed at ~/.config/nvim by home-manager)
 scripts/
   backup_home.sh                       # Backup script (managed by backup.nix, placed at ~/backup_home.sh)
+nixhyde/                               # Standalone flake — HyDE (Hyprland) desktop for nixpc and nixvm
+  flake.nix                            # Pins nixpkgs-unstable + home-manager + hydenix (both hosts)
+  nixpc-configuration.nix              # System config — hydenix, AMD GPU, gaming, virtualisation
+  nixpc-home.nix                       # Home Manager config — HyDE rice, shell, CLI, dev, apps, backup
+  nixvm-configuration.nix              # System config — hydenix, SPICE/QEMU agents (no GPU/gaming/virt)
+  nixvm-home.nix                       # Home Manager config — HyDE rice, shell, CLI, dev, apps (no backup)
 ```
 
 ### What each host includes
@@ -163,6 +178,10 @@ Update any personal details that weren't changed before install:
 sudo nixos-rebuild switch --flake ~/projects/nixmigrate#nixpc
 sudo nixos-rebuild switch --flake ~/projects/nixmigrate#nixvm
 
+# Apply the HyDE variant instead (pick your host)
+sudo nixos-rebuild switch --flake ~/projects/nixmigrate/nixhyde#nixpc-hyde
+sudo nixos-rebuild switch --flake ~/projects/nixmigrate/nixhyde#nixvm-hyde
+
 # Update all inputs to latest nixpkgs-unstable commit
 nix flake update
 
@@ -238,3 +257,4 @@ The timer runs nightly at midnight. If the machine is off at midnight, it will c
 - **Dual desktop** — KDE Plasma 6 as the daily driver, Hyprland available as an alternative session
 - **UWSM for Hyprland** — Proper systemd session integration via `graphical-session.target`
 - **Shared modules** — Both hosts pull from the same `modules/` tree; host-specific differences live in `hosts/*/configuration.nix`
+- **nixhyde standalone flake** — Alternative desktop config using [HyDE/hydenix](https://github.com/richen604/hydenix) for a pre-riced Hyprland experience; self-contained in `nixhyde/` with its own flake inputs

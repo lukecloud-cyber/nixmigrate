@@ -6,7 +6,7 @@
   # ── Hydenix system options ──────────────────────────────────────────
   hydenix = {
     enable = true;
-    hostname = "nixpc-hyde";
+    hostname = "nixpc";
     timezone = "America/Chicago";
     locale = "en_US.UTF-8";
   };

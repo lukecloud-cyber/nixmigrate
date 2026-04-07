@@ -47,7 +47,6 @@
   };
 
   # ── Your shell extras (on top of hydenix fish) ─────────────────────
-  # HM merges these with hydenix's fish config automatically.
 
   programs.tmux = {
     enable = true;
@@ -91,7 +90,7 @@
   };
 
   xdg.configFile."nvim" = {
-    source = ./dotfiles/nvim;
+    source = ../dotfiles/nvim;
     recursive = true;
   };
 
@@ -118,14 +117,6 @@
     claude-code
     gemini-cli
     mcp-nixos
-
-    # Gaming extras
-    protontricks
-    protonup-qt
-
-    # Virtualisation GUIs
-    virt-manager
-    virt-viewer
 
     # Apps
     bitwarden-desktop
@@ -162,51 +153,6 @@
 
   # Firefox (hydenix also enables this, HM merges cleanly)
   programs.firefox.enable = true;
-
-  # ── Backup (rclone to Backblaze B2) ────────────────────────────────
-  home.file."backup_home.sh" = {
-    source = ./scripts/backup_home.sh;
-    executable = true;
-  };
-
-  home.file.".config/rclone/exclude.txt".text = ''
-    /Games/**
-    /media/**
-    /.cache/**
-    /.local/share/Steam/steamapps/common/**
-    /.steam/**
-    /.var/app/*/cache/**
-    /.pki/**
-    /.npm/**
-    /.cargo/registry/**
-    /node_modules/**
-    /pass/**
-    /.local/share/containers/**
-    /Downloads/**
-    .DS_Store
-  '';
-
-  systemd.user.services.rclone-backup = {
-    Unit = {
-      Description = "rclone home directory backup to Backblaze B2";
-      After = [ "network-online.target" ];
-      Wants = [ "network-online.target" ];
-    };
-    Service = {
-      Type = "oneshot";
-      ExecStart = "${config.home.homeDirectory}/backup_home.sh";
-      Environment = "PATH=${lib.makeBinPath [ pkgs.rclone pkgs.gum pkgs.flatpak pkgs.bash ]}:/run/current-system/sw/bin";
-    };
-  };
-
-  systemd.user.timers.rclone-backup = {
-    Unit.Description = "nightly rclone backup timer";
-    Timer = {
-      OnCalendar = "daily";
-      Persistent = true;
-    };
-    Install.WantedBy = [ "timers.target" ];
-  };
 
   home.stateVersion = lib.mkForce "24.11";
 }

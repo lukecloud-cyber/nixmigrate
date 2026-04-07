@@ -13,6 +13,10 @@ NixOS flake managing two hosts: a bare-metal AMD workstation (`nixpc`) and a QEM
 sudo nixos-rebuild switch --flake ~/projects/nixmigrate#nixpc
 sudo nixos-rebuild switch --flake ~/projects/nixmigrate#nixvm
 
+# Apply HyDE (Hyprland) variant instead
+sudo nixos-rebuild switch --flake ~/projects/nixmigrate/nixhyde#nixpc-hyde
+sudo nixos-rebuild switch --flake ~/projects/nixmigrate/nixhyde#nixvm-hyde
+
 # Update flake inputs to latest
 nix flake update
 
@@ -37,6 +41,8 @@ nix flake check
 - `home/` — Home Manager modules (shell, cli, dev, apps, backup)
 
 Both hosts share the same module tree. The VM (`nixvm`) omits `hardware.nix`, `gaming.nix`, `virtualisation.nix`, and `backup.nix`. Host-specific differences are controlled by which modules each host's `configuration.nix` and `home.nix` import.
+
+**Standalone HyDE flake** (`nixhyde/`): Self-contained flake using [hydenix](https://github.com/richen604/hydenix) for a pre-riced Hyprland desktop. Defines `nixpc-hyde` and `nixvm-hyde` configurations with their own `*-configuration.nix` and `*-home.nix` files. Shares `dotfiles/` and `scripts/` from the parent directory.
 
 **Dotfiles** (`dotfiles/`): Files placed into `~` by Home Manager (currently LazyVim config at `dotfiles/nvim/`).
 
