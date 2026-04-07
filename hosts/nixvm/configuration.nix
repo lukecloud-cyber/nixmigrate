@@ -6,9 +6,9 @@
     ../../modules/system/network.nix
   ];
 
-  # Bootloader (EFI)
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # Bootloader (BIOS — VM has no EFI partition)
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/vda";
 
   # Standard kernel — no need for Zen in a VM
   # (uses default nixpkgs kernel)

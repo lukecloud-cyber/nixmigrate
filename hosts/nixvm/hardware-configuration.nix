@@ -7,16 +7,9 @@
   boot.kernelModules = [ "kvm-intel" "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  # TODO: Replace with real UUIDs after installing NixOS in the VM
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/REPLACE-WITH-ROOT-UUID";
+    device = "/dev/disk/by-uuid/8b13d890-1521-40ea-8a9e-186bd82c566f";
     fsType = "ext4";
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/REPLACE-WITH-BOOT-UUID";
-    fsType = "vfat";
-    options = [ "fmask=0077" "dmask=0077" ];
   };
 
   swapDevices = [ ];
