@@ -130,7 +130,6 @@ Update any personal details that weren't changed before install:
 | File | What to update |
 |------|----------------|
 | `hosts/*/configuration.nix` | `time.timeZone` (currently `"America/Chicago"`) |
-| `modules/system/network.nix` | `networking.hostName` (currently `"nixpc"`) |
 | `modules/home/dev.nix` | `userEmail` for git identity |
 
 ## Applying Changes

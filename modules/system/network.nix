@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
   networking = {
-    hostName = "nixpc";  # Update to your actual hostname
+    # hostName is set per-host in hosts/*/configuration.nix
     networkmanager = {
       enable = true;
       dns = "systemd-resolved";  # Delegate DNS to systemd-resolved via stub resolver

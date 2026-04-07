@@ -6,6 +6,8 @@
     ../../modules/system/network.nix
   ];
 
+  networking.hostName = "nixvm";
+
   # Bootloader (BIOS — VM has no EFI partition)
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/vda";

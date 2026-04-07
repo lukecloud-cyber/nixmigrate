@@ -9,6 +9,8 @@
     ../../modules/system/network.nix
   ];
 
+  networking.hostName = "nixpc";
+
   # Bootloader (EFI — change to boot.loader.grub if your machine uses BIOS)
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
