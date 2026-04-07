@@ -97,9 +97,27 @@ sudo nixos-rebuild switch --flake /tmp/nixmigrate#nixvm
 
 Reboot to pick up all changes (new user, bootloader, services, etc.).
 
+### Phase 2b: Set the Password for `luke`
+
+The rebuild creates the `luke` account but `initialPassword` may not take effect reliably. Boot the NixOS ISO again and set the password manually:
+
+1. Boot the NixOS installer ISO
+2. Open a terminal and mount your installed system:
+
+```bash
+sudo mount /dev/vda1 /mnt        # adjust device name for your disk (use lsblk -f to check)
+sudo nixos-enter --root /mnt
+passwd luke
+exit
+sudo umount /mnt
+reboot
+```
+
+You can now log in as `luke` with the password you just set.
+
 ### Phase 3: Permanent Setup
 
-After rebooting, log in as `luke` (password: `changeme`). Change your password immediately:
+After rebooting, log in as `luke`. Change your password if needed:
 
 ```bash
 passwd
