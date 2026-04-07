@@ -10,7 +10,7 @@
 
   # Bootloader (BIOS — VM has no EFI partition)
   boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/vda";
+  boot.loader.grub.device = "/dev/sda";
 
   # Standard kernel — no need for Zen in a VM
   # (uses default nixpkgs kernel)

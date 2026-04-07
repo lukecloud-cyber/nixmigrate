@@ -14,7 +14,7 @@
   # ── Boot (BIOS VM — override hydenix's default systemd-boot) ───────
   boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.grub.enable = lib.mkForce true;
-  boot.loader.grub.device = "/dev/vda";
+  boot.loader.grub.device = "/dev/sda";
 
   # ── QEMU/SPICE guest agents ────────────────────────────────────────
   services.qemuGuest.enable = true;
