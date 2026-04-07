@@ -35,9 +35,11 @@ modules/
   home/
     shell.nix                          # fish, tmux, starship, atuin, zoxide, direnv
     cli.nix                            # eza, bat, fd, ripgrep, fastfetch, and other CLI tools
-    dev.nix                            # neovim, git, gh, glab, shellcheck, node, python, uv, claude-code, gemini-cli
+    dev.nix                            # neovim + LazyVim, git, gh, glab, shellcheck, node, python, uv, claude-code, gemini-cli
     apps.nix                           # GUI apps: Firefox, Bitwarden, Obsidian, GIMP, OBS, etc.
     backup.nix                         # rclone + Backblaze B2 backup, nightly systemd timer (nixpc only)
+dotfiles/
+  nvim/                                # LazyVim starter config (placed at ~/.config/nvim by home-manager)
 scripts/
   backup_home.sh                       # Backup script (managed by backup.nix, placed at ~/backup_home.sh)
 ```
@@ -168,6 +170,7 @@ Your `~/projects/nixmigrate/` folder is the **source code** for your system, not
 | **Login sessions** | SDDM shows both KDE Plasma and Hyprland — KDE is pre-selected |
 | **VM management** (nixpc only) | Open virt-manager; luke is in the `libvirtd` group (no sudo needed) |
 | **Claude Code** | Installed via nixpkgs (`claude-code` package) |
+| **Neovim / LazyVim** | Config is placed by home-manager. Open `nvim` after first rebuild — plugins download automatically on first launch (needs internet). Customize via `dotfiles/nvim/lua/plugins/`. |
 
 ### Backups — rclone + Backblaze B2 (nixpc only)
 
