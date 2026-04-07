@@ -60,45 +60,44 @@ scripts/
 
 ## Installation
 
-### Phase 1: From the NixOS Installer
+### Phase 1: Install NixOS with the Graphical Installer
 
-Boot the NixOS ISO. After partitioning and mounting your drives to `/mnt`:
+Boot the NixOS ISO and run through the graphical installer normally (partition disks, create your user account, etc.). Reboot when finished.
+
+### Phase 2: Apply Your Flake Config
+
+After rebooting, log in with the account you created during install. Open a terminal and get a shell with git:
 
 ```bash
-# Generate hardware config for your actual hardware
-nixos-generate-config --root /mnt
-
-# Get git in the live environment
 nix-shell -p git
+```
 
-# Clone this repo
+Clone this repo and copy the installer-generated hardware config into it:
+
+```bash
 cd /tmp
 git clone https://github.com/lukecloud-cyber/nixmigrate
 ```
 
-Now copy the generated hardware config into the correct host directory and install:
-
 **For bare-metal (nixpc):**
 
 ```bash
-cp /mnt/etc/nixos/hardware-configuration.nix /tmp/nixmigrate/hosts/nixpc/hardware-configuration.nix
-nixos-install --flake /tmp/nixmigrate#nixpc
+cp /etc/nixos/hardware-configuration.nix /tmp/nixmigrate/hosts/nixpc/hardware-configuration.nix
+sudo nixos-rebuild switch --flake /tmp/nixmigrate#nixpc
 ```
 
 **For a VM (nixvm):**
 
 ```bash
-cp /mnt/etc/nixos/hardware-configuration.nix /tmp/nixmigrate/hosts/nixvm/hardware-configuration.nix
-nixos-install --flake /tmp/nixmigrate#nixvm
+cp /etc/nixos/hardware-configuration.nix /tmp/nixmigrate/hosts/nixvm/hardware-configuration.nix
+sudo nixos-rebuild switch --flake /tmp/nixmigrate#nixvm
 ```
 
-Set the root password when prompted, then reboot.
+Reboot to pick up all changes (new user, bootloader, services, etc.).
 
-> **Note:** `nixos-install --flake` is used during initial installation from the ISO only. All future changes use `nixos-rebuild switch --flake`.
+### Phase 3: Permanent Setup
 
-### Phase 2: After First Boot
-
-You'll land in KDE with the full config applied. Clone the repo to your permanent home location and commit the real hardware config:
+After rebooting, log in as `luke` (password: `changeme` — change it with `passwd`). Clone the repo to your permanent home location and commit the real hardware config:
 
 **For nixpc:**
 
@@ -106,7 +105,6 @@ You'll land in KDE with the full config applied. Clone the repo to your permanen
 git clone https://github.com/lukecloud-cyber/nixmigrate ~/projects/nixmigrate
 cd ~/projects/nixmigrate
 
-# Commit the real hardware-configuration.nix so the repo is complete
 cp /etc/nixos/hardware-configuration.nix ./hosts/nixpc/hardware-configuration.nix
 git add hosts/nixpc/hardware-configuration.nix
 git commit -m "feat: add real hardware-configuration.nix for nixpc"
