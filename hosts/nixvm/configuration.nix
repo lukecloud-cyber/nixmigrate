@@ -21,6 +21,7 @@
   users.users.luke = {
     isNormalUser = true;
     description = "Luke";
+    initialPassword = "changeme";
     extraGroups = [ "wheel" "networkmanager" "video" "audio" "input" ];
     shell = pkgs.fish;
   };
