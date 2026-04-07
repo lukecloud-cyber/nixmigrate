@@ -12,6 +12,7 @@
     chafa        # image rendering in the terminal
     w3m          # terminal web browser
     television   # fuzzy finder / picker with previews
+    fastfetch    # system info display
   ];
 
   # Aliases extend the fish config declared in shell.nix — HM merges these automatically
