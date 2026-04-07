@@ -6,6 +6,13 @@
     vimAlias = true;
   };
 
+  # LazyVim config — placed at ~/.config/nvim by home-manager
+  # Plugins are downloaded automatically on first launch by lazy.nvim
+  xdg.configFile."nvim" = {
+    source = ../../dotfiles/nvim;
+    recursive = true;
+  };
+
   programs.git = {
     enable = true;
     userName = "luke";
