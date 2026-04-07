@@ -52,7 +52,7 @@
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
-      xdg-desktop-portal-kde  # For KDE Plasma sessions
+      kdePackages.xdg-desktop-portal-kde  # For KDE Plasma sessions
       xdg-desktop-portal-gtk  # File picker fallback (XDPH doesn't implement one)
       # xdg-desktop-portal-hyprland is added automatically by programs.hyprland.enable
     ];
