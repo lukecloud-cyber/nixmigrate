@@ -29,15 +29,21 @@
   };
 
   # Claude Code global settings
-  home.file.".claude/settings.json".text = builtins.toJSON {
-    skipDangerousModePermissionPrompt = true;
+  home.file.".claude/settings.json" = {
+    force = true;
+    text = builtins.toJSON {
+      skipDangerousModePermissionPrompt = true;
+    };
   };
 
   # Gemini CLI global settings
-  home.file.".gemini/settings.json".text = builtins.toJSON {
-    mcpServers = {
-      nixos = {
-        command = "${inputs.mcp-nixos.packages.${pkgs.system}.default}/bin/mcp-nixos";
+  home.file.".gemini/settings.json" = {
+    force = true;
+    text = builtins.toJSON {
+      mcpServers = {
+        nixos = {
+          command = "${inputs.mcp-nixos.packages.${pkgs.system}.default}/bin/mcp-nixos";
+        };
       };
     };
   };
