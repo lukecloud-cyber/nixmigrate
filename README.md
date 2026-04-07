@@ -34,8 +34,8 @@ modules/
     network.nix                        # NetworkManager, KDE Connect, systemd-resolved
   home/
     shell.nix                          # fish, tmux, starship, atuin, zoxide, direnv
-    cli.nix                            # eza, bat, fd, ripgrep, and other CLI tools
-    dev.nix                            # neovim, git, gh, glab, shellcheck, node, python, uv, claude-code
+    cli.nix                            # eza, bat, fd, ripgrep, fastfetch, and other CLI tools
+    dev.nix                            # neovim, git, gh, glab, shellcheck, node, python, uv, claude-code, gemini-cli
     apps.nix                           # GUI apps: Firefox, Bitwarden, Obsidian, GIMP, OBS, etc.
     backup.nix                         # rclone + Backblaze B2 backup, nightly systemd timer (nixpc only)
 scripts/
