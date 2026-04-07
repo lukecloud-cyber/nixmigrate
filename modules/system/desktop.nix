@@ -1,4 +1,7 @@
 { config, pkgs, ... }: {
+  # Persist secrets (browser logins, gh tokens, etc.) across reboots
+  services.gnome.gnome-keyring.enable = true;
+
   # X server base (required even for Wayland sessions on NixOS)
   services.xserver.enable = true;
 
