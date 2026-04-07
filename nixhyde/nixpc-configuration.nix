@@ -1,6 +1,6 @@
 { config, pkgs, lib, inputs, ... }: {
   imports = [
-    ./hardware-configuration.nix
+    ../hosts/nixpc/hardware-configuration.nix
   ];
 
   # ── Hydenix system options ──────────────────────────────────────────

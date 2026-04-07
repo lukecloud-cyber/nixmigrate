@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, inputs, ... }: {
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -36,6 +36,6 @@
     uv          # Fast Python package/project manager
     claude-code # Agentic coding tool (Anthropic)
     gemini-cli  # Google Gemini AI in the terminal
-    mcp-nixos   # MCP server for NixOS
+    inputs.mcp-nixos.packages.${pkgs.system}.default  # MCP server for NixOS
   ];
 }

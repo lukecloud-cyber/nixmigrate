@@ -9,13 +9,11 @@
     enable32Bit = true;  # Required for Steam and Proton 32-bit games
 
     extraPackages = with pkgs; [
-      amdvlk                   # AMD open Vulkan driver (alternative to radv in Mesa)
       rocmPackages.clr         # ROCm OpenCL runtime (GPU compute)
     ];
 
     # 32-bit Vulkan support for Proton
     extraPackages32 = with pkgs; [
-      driversi686Linux.amdvlk
     ];
   };
 

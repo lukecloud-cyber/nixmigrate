@@ -112,7 +112,6 @@
     glab
     shellcheck
     nodejs
-    python3
     uv
     claude-code
     gemini-cli
