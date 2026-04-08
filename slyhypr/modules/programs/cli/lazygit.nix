@@ -18,6 +18,17 @@ in
       home.shellAliases = {
         lg = "lazygit";
       };
+      programs.git.settings = {
+        core.pager = "delta";
+        interactive.diffFilter = "delta --color-only";
+        delta = {
+          navigate = true;
+          line-numbers = true;
+          syntax-theme = "Catppuccin Mocha";
+        };
+        merge.conflictstyle = "diff3";
+        diff.colorMoved = "default";
+      };
       programs.lazygit = {
         enable = true;
         settings = {
@@ -35,6 +46,10 @@ in
           # );
           git = {
             overrideGpg = true;
+            paging = {
+              colorArg = "always";
+              pager = "delta --dark --paging=never";
+            };
           };
         };
       };

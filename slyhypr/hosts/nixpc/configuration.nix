@@ -34,11 +34,11 @@ in
     ../../modules/programs/terminal/${vars.terminal}
     ../../modules/programs/editor/${vars.editor}
     ../../modules/programs/cli
-    ../../modules/programs/media/discord
-    ../../modules/programs/media/spicetify
-    ../../modules/programs/media/mpv
-    ../../modules/programs/misc/thunar
-    ../../modules/programs/misc/lact
+    ../../modules/programs/media/discord.nix
+    ../../modules/programs/media/spicetify.nix
+    ../../modules/programs/media/mpv.nix
+    ../../modules/programs/misc/thunar.nix
+    ../../modules/programs/misc/lact.nix
 
     # Skip: drives (Sly-Harvey-specific UUIDs), syncthing, tlp (desktop, not laptop)
   ]

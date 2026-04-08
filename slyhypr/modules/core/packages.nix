@@ -36,10 +36,20 @@
     tldr # Improved Man
     unrar # Tool For Handling .rar Files
     unzip # Tool For Handling .zip Files
+    bat # Cat with syntax highlighting and git integration
+    delta # Beautiful git diff pager
+    dust # Intuitive disk usage visualization
+    duf # Clean df replacement
+    sd # Simpler sed for find-and-replace
+    procs # Modern ps with color and tree view
+    gping # Ping with live graph
+    hyperfine # Command benchmarking
+    tokei # Code statistics by language
+    hexyl # Colored hex viewer
+    choose # Simple column selection (cut/awk replacement)
     # aider-chat # AI in terminal (Optional: Client only)
     # cmatrix # Matrix Movie Effect In Terminal
     # cowsay # Great Fun Terminal Program
-    # duf # Utility For Viewing Disk Usage In Terminal
     # dysk # Disk space util nice formattting
     # ffmpeg # Terminal Video / Audio Editing
     # gemini-cli # CLI AI client ONLY (optional)

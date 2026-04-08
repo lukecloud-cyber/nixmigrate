@@ -28,22 +28,22 @@ in
     # ./core/dlna.nix
 
     # Optional
-    ./hardware/drives
+    ./hardware/drives.nix
     ./hardware/video/${vars.videoDriver}.nix # Enable gpu drivers defined in variables.nix
     ./desktop/${vars.desktop} # Set window manager defined in variables.nix
     ./programs/browser/${vars.browser} # Set browser defined in variables.nix
     ./programs/terminal/${vars.terminal} # Set terminal defined in variables.nix
     ./programs/editor/${vars.editor} # Set editor defined in variables.nix
     ./programs/cli
-    ./programs/media/discord
-    ./programs/media/spicetify
-    # ./programs/media/youtube-music
-    # ./programs/media/thunderbird
-    # ./programs/media/obs-studio
-    ./programs/media/mpv
-    ./programs/misc/tlp
-    ./programs/misc/thunar
-    ./programs/misc/lact # GPU fan, clock and power configuration
+    ./programs/media/discord.nix
+    ./programs/media/spicetify.nix
+    # ./programs/media/youtube-music.nix
+    # ./programs/media/thunderbird.nix
+    # ./programs/media/obs-studio.nix
+    ./programs/media/mpv.nix
+    ./programs/misc/tlp.nix
+    ./programs/misc/thunar.nix
+    ./programs/misc/lact.nix # GPU fan, clock and power configuration
   ]
   ++ lib.optional (vars.games == true) ./core/games.nix;
 }

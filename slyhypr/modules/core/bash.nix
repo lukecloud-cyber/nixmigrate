@@ -95,6 +95,10 @@
             mkd = "mkdir -pv";
             tp = "${pkgs.trash-cli}/bin/trash-put";
             tpr = "${pkgs.trash-cli}/bin/trash-restore";
+            cat = "${pkgs.bat}/bin/bat";
+            du = "${pkgs.dust}/bin/dust";
+            df = "${pkgs.duf}/bin/duf";
+            ps = "${pkgs.procs}/bin/procs";
             grep = "grep --color=always";
             pokemon = "pokego --random 1-8 --no-title";
 

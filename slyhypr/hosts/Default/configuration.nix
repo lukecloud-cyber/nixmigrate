@@ -31,22 +31,22 @@ in
     # ../../modules/core/dlna.nix
 
     # Optional
-    ../../modules/hardware/drives # Automatically mount extra external/internal drives
+    ../../modules/hardware/drives.nix # Automatically mount extra external/internal drives
     ../../modules/hardware/video/${vars.videoDriver}.nix # Enable gpu drivers defined in variables.nix
     ../../modules/desktop/${vars.desktop} # Set window manager defined in variables.nix
     ../../modules/programs/browser/${vars.browser} # Set browser defined in variables.nix
     ../../modules/programs/terminal/${vars.terminal} # Set terminal defined in variables.nix
     ../../modules/programs/editor/${vars.editor} # Set editor defined in variables.nix
     ../../modules/programs/cli
-    ../../modules/programs/media/discord
-    ../../modules/programs/media/spicetify
-    # ../../modules/programs/media/youtube-music
-    # ../../modules/programs/media/thunderbird
-    # ../../modules/programs/media/obs-studio
-    ../../modules/programs/media/mpv
-    ../../modules/programs/misc/tlp
-    ../../modules/programs/misc/thunar
-    ../../modules/programs/misc/lact # GPU fan, clock and power configuration
+    ../../modules/programs/media/discord.nix
+    ../../modules/programs/media/spicetify.nix
+    # ../../modules/programs/media/youtube-music.nix
+    # ../../modules/programs/media/thunderbird.nix
+    # ../../modules/programs/media/obs-studio.nix
+    ../../modules/programs/media/mpv.nix
+    ../../modules/programs/misc/tlp.nix
+    ../../modules/programs/misc/thunar.nix
+    ../../modules/programs/misc/lact.nix # GPU fan, clock and power configuration
   ]
   ++ lib.optional (vars.games == true) ../../modules/core/games.nix;
 }

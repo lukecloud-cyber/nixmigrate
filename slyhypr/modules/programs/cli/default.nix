@@ -1,12 +1,12 @@
 {
   imports = [
-    ./btop
-    ./cava
-    ./direnv
+    ./btop.nix
+    ./cava.nix
+    ./direnv.nix
     ./fastfetch
-    ./lazygit
+    ./lazygit.nix
     ./lf
-    ./tmux
-    ./yazi
+    ./tmux.nix
+    ./yazi.nix
   ];
 }

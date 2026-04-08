@@ -52,12 +52,96 @@ dotfiles/
   nvim/                                # LazyVim starter config (placed at ~/.config/nvim by home-manager)
 scripts/
   backup_home.sh                       # Backup script (managed by backup.nix, placed at ~/backup_home.sh)
-slyhypr/                               # Standalone flake — Sly-Harvey Hyprland rice for nixpc and nixvm
+```
+
+### slyhypr/ — Standalone Sly-Harvey Hyprland Flake
+
+```
+slyhypr/
   flake.nix                            # Pins nixpkgs-unstable + home-manager + many inputs (nixvim, spicetify, etc.)
-  hosts/nixvm/                         # VM host — BIOS GRUB, SPICE agents, 1920x1200, KDE fallback
-  hosts/nixpc/                         # PC host — AMD GPU, gaming, virtualisation, KDE fallback
-  hosts/nixlap/                        # Laptop host — AMD GPU, Bluetooth, no virtualisation or gaming
-  modules/                             # Full Sly-Harvey module tree (core, desktop, programs, themes, scripts)
+  hosts/
+    Default/                           # Template host config
+    nixpc/                             # PC host — AMD GPU, gaming, virtualisation, KDE fallback
+    nixlap/                            # Laptop host — AMD GPU, Bluetooth, TLP, KDE fallback
+    nixvm/                             # VM host — BIOS GRUB, SPICE agents, 1920x1200, KDE fallback
+  modules/
+    default.nix                        # Hub — aggregates all modules, uses variables.nix for dynamic selection
+    core/                              # System fundamentals (22 files)
+      bash.nix                         # Bash shell config via Home Manager — starship, direnv, shell options, aliases
+      zsh.nix                          # Zsh config — lazy-loaded plugins, fzf-tab, zsh-defer, aliases
+      boot.nix                         # Filesystem support, kernel params, GRUB theme, EFI loader
+      dns.nix                          # AdGuard Home + Unbound DNS
+      fonts.nix                        # System fonts (Nerd Fonts, etc.)
+      games.nix                        # Steam, Gamescope, MangoHud, Lutris, Heroic (conditional on vars.games)
+      hardware.nix                     # Firmware, Bluetooth, kernel modules
+      network.nix                      # NetworkManager, TCP tuning
+      nh.nix                           # Nix helper with auto-clean
+      packages.nix                     # System packages — CLI tools (bat, delta, dust, duf, fd, ripgrep, etc.)
+      sddm.nix                        # SDDM display manager theme
+      security.nix                     # Polkit, sudo, security settings
+      services.nix                     # PipeWire, Bluetooth, SSH, fstrim, udisks2
+      starship.nix                     # Starship prompt with language-specific symbols
+      system.nix                       # Nix settings, locale, timezone, state version
+      users.nix                        # User account, groups, initial password
+      printing.nix, ssh.nix, syncthing.nix, dlna.nix, flatpak.nix, virtualisation.nix
+    hardware/
+      drives.nix                       # Extra drive mounts (NTFS games, ext4 work)
+      video/                           # GPU drivers — selected via ${vars.videoDriver}
+        amdgpu.nix, intel.nix, nvidia.nix, nvk.nix
+    desktop/                           # Desktop environments — selected via ${vars.desktop}
+      hyprland/
+        default.nix                    # Hyprland compositor config (keybinds, animations, window rules, monitors)
+        scripts/                       # 20 helper scripts (screenshot, screen-record, wallpaper, gamemode, etc.)
+        programs/                      # Hyprland companion programs
+          dunst.nix                    # Notification daemon
+          hypridle.nix                 # Idle management (lock/suspend timers)
+          hyprlock.nix                 # Lock screen with wallpaper
+          hyprpanel.nix                # AGS-based panel (alternative bar)
+          noctalia.nix                 # Noctalia shell (alternative bar)
+          swaync.nix                   # SwayNC notification center
+          swaylock.nix                 # Swaylock screen locker
+          rofi/                        # App launcher (with themes, assets, launcher types)
+          waybar/                      # Status bar — stylish.nix, minimal.nix
+          wlogout/                     # Logout menu (with icons)
+      gnome/                           # GNOME desktop (dconf settings, extensions)
+      i3/                              # i3 window manager (polybar, picom, dunst, keybindings)
+      plasma6/                         # KDE Plasma 6 (panels, widgets, power management)
+    programs/
+      browser/                         # Selected via ${vars.browser}
+        brave/, firefox/, floorp/, zen-beta/
+      terminal/                        # Selected via ${vars.terminal}
+        alacritty/, kitty/
+      editor/                          # Selected via ${vars.editor}
+        neovim/, nixvim/, helix/, vscode/, doom-emacs/, nvchad/
+      cli/                             # CLI tools
+        default.nix                    # Aggregator
+        btop.nix                       # System monitor (Catppuccin theme)
+        cava.nix                       # Audio visualizer
+        direnv.nix                     # Per-directory environments
+        lazygit.nix                    # Git TUI + delta pager config
+        tmux.nix                       # Terminal multiplexer (Catppuccin, vim keys)
+        yazi.nix                       # File manager TUI
+        fastfetch/                     # System info (with custom icons)
+        lf/                            # File manager TUI (with icons)
+      media/                           # Media applications
+        discord.nix                    # Discord + Vencord (Catppuccin, 100+ plugin configs)
+        mpv.nix                        # Video player (keybinds, MPRIS, thumbnails)
+        obs-studio.nix                 # Screen recording (Wayland plugins)
+        spicetify.nix                  # Spotify theming (Catppuccin, adblock)
+        thunderbird.nix                # Email client (Catppuccin)
+        youtube-music.nix              # YouTube Music desktop (Catppuccin, plugins)
+      misc/                            # Miscellaneous system tools
+        cpufreq.nix                    # CPU frequency scaling
+        lact.nix                       # AMD GPU fan/clock/power control
+        thunar.nix                     # File manager (archive, volume plugins)
+        tlp.nix                        # Laptop power management
+    scripts/                           # System utility scripts
+      default.nix                      # Script aggregator (callPackage pattern)
+      rebuild.nix, rollback.nix, launcher.nix, network.nix,
+      tmux-sessionizer.nix, extract.nix, driverinfo.nix, underwatt.nix
+    themes/                            # GTK/Qt themes + wallpapers
+      Catppuccin/, Dracula/, rose-pine/
+      wallpapers/                      # Wallpaper images
 ```
 
 ### What each host includes

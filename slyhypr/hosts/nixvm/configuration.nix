@@ -32,8 +32,8 @@ in
     ../../modules/programs/terminal/${vars.terminal}
     ../../modules/programs/editor/${vars.editor}
     ../../modules/programs/cli
-    ../../modules/programs/media/mpv
-    ../../modules/programs/misc/thunar
+    ../../modules/programs/media/mpv.nix
+    ../../modules/programs/misc/thunar.nix
 
     # VM-only: skip drives, gaming, lact, syncthing, cava, spicetify, discord, tlp
   ];

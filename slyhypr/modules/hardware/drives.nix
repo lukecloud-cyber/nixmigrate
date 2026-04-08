@@ -1,5 +1,20 @@
 { lib, ... }:
 {
+  fileSystems."/mnt/games" = lib.mkForce {
+    device = "/dev/disk/by-uuid/01DA12C1CBDE9100";
+    fsType = "ntfs-3g";
+    options = [
+      "rw"
+      "uid=1000"
+      "gid=100"
+      "noatime"
+      "umask=000"
+      "nofail"
+      "x-gvfs-show"
+      "x-systemd.mount-timeout=5"
+    ];
+  };
+
   fileSystems."/mnt/work" = lib.mkForce {
     device = "/dev/disk/by-uuid/f6f6d68c-68f8-4c50-8155-105a22b9ff35";
     fsType = "ext4";

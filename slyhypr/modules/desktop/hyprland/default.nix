@@ -38,18 +38,18 @@ in
     ../../themes/Catppuccin # Catppuccin GTK and QT themes
     ./programs/wlogout
     ./programs/rofi
-    ./programs/hypridle
-    ./programs/hyprlock
+    ./programs/hypridle.nix
+    ./programs/hyprlock.nix
   ]
-  ++ lib.optional (bar == "hyprpanel") ./programs/hyprpanel
+  ++ lib.optional (bar == "hyprpanel") ./programs/hyprpanel.nix
   ++ lib.optionals (bar == "noctalia") [
-    # ./programs/dunst
-    ./programs/swaync
-    ./programs/noctalia
+    # ./programs/dunst.nix
+    ./programs/swaync.nix
+    ./programs/noctalia.nix
   ]
   ++ lib.optionals (bar == "waybar") [
-    # ./programs/dunst
-    ./programs/swaync
+    # ./programs/dunst.nix
+    ./programs/swaync.nix
     ./programs/waybar/${waybarTheme}.nix
   ];
 
@@ -444,6 +444,7 @@ in
               "$mainMod, F, exec, $browser"
               "$mainMod SHIFT, S, exec, spotify"
               "$mainMod SHIFT, Y, exec, youtube-music"
+              "$mainMod, Y, exec, $term -e ${tuiFileManager}" # Yazi file manager
               "$CONTROL ALT, DELETE, exec, $term -e '${getExe pkgs.btop}'" # System Monitor
               "$CONTROL ALT, M, exec, $term --class \"microfetch\" --hold -e microfetch" # System Monitor
               "$mainMod CTRL, C, exec, ${getExe pkgs.hyprpicker} --autocopy --format=hex" # Colour Picker

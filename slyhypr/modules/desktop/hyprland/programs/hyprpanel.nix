@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (import ../../../../../hosts/${host}/variables.nix) clock24h bluetoothSupport;
+  inherit (import ../../../../hosts/${host}/variables.nix) clock24h bluetoothSupport;
 in
 {
   # Optional Dependencies
@@ -164,7 +164,7 @@ in
               };
             };
             dashboard = {
-              powermenu.avatar.image = "${./profile-picture.jpg}";
+              powermenu.avatar.image = "${./hyprpanel-profile-picture.jpg}";
               recording.path = "$HOME/Videos/screen-record";
               directories.enabled = false;
               stats.enable_gpu = true;

@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (import ../../../../../hosts/${host}/variables.nix) clock24h bluetoothSupport;
+  inherit (import ../../../../hosts/${host}/variables.nix) clock24h bluetoothSupport;
 in
 {
   # Optional Dependencies
@@ -184,7 +184,7 @@ in
             darkMode = true;
           };
           general = {
-            avatarImage = "${./profile-picture.jpg}";
+            avatarImage = "${./noctalia-profile-picture.jpg}";
             radiusRatio = 0.2;
             lockOnSuspend = false;
             showSessionButtonsOnLockScreen = true;
@@ -207,7 +207,7 @@ in
           };
           wallpaper = {
             enabled = false;
-            directory = "${../../../../themes/wallpapers}";
+            directory = "${../../../themes/wallpapers}";
             setWallpaperOnAllMonitors = true;
           };
           appLauncher = {

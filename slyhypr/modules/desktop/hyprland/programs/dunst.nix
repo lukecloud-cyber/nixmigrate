@@ -4,7 +4,7 @@
   ...
 }:
 let
-  inherit (import ../../../../../hosts/${host}/variables.nix) browser;
+  inherit (import ../../../../hosts/${host}/variables.nix) browser;
 in
 {
   home-manager.sharedModules = [
