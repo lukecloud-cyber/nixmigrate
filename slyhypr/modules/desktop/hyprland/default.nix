@@ -158,7 +158,7 @@ in
               #"[workspace special silent] ${terminal}"
 
               "${lib.getExe wallpaper}"
-              "${bar}"
+              # waybar is managed by systemd (programs.waybar.systemd.enable)
               "swaync"
               "nm-applet --indicator"
               # "wl-clipboard-history -t"
