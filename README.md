@@ -16,9 +16,10 @@ Both hosts share the same desktop environment (KDE Plasma 6 + Hyprland via SDDM)
 | Host | Target | Desktop | Extras |
 |------|--------|---------|--------|
 | `nixpc` | Bare-metal AMD workstation | [Sly-Harvey Hyprland](https://github.com/Sly-Harvey/NixOS) | Catppuccin theme, waybar stylish, AMD GPU, Steam, Gamescope, KDE Plasma fallback |
+| `nixlap` | Laptop | [Sly-Harvey Hyprland](https://github.com/Sly-Harvey/NixOS) | Catppuccin theme, waybar stylish, AMD GPU, Bluetooth, KDE Plasma fallback (no virtualisation or gaming) |
 | `nixvm` | QEMU/KVM virtual machine | [Sly-Harvey Hyprland](https://github.com/Sly-Harvey/NixOS) | Catppuccin theme, waybar stylish, 1920x1200 display, KDE Plasma fallback, SPICE agent |
 
-`slyhypr/` is a self-contained flake forked from [Sly-Harvey/NixOS](https://github.com/Sly-Harvey/NixOS) that provides a fully-riced Hyprland desktop with Catppuccin theming, waybar, rofi, hyprlock, and custom scripts. KDE Plasma 6 is enabled alongside Hyprland as a fallback (selectable at SDDM login). Apply with `nixos-rebuild switch --flake ~/projects/nixmigrate/slyhypr#nixvm` or `#nixpc`.
+`slyhypr/` is a self-contained flake forked from [Sly-Harvey/NixOS](https://github.com/Sly-Harvey/NixOS) that provides a fully-riced Hyprland desktop with Catppuccin theming, waybar, rofi, hyprlock, and custom scripts. KDE Plasma 6 is enabled alongside Hyprland as a fallback (selectable at SDDM login). Apply with `nixos-rebuild switch --flake ~/projects/nixmigrate/slyhypr#nixvm`, `#nixpc`, or `#nixlap`.
 
 ## Structure
 
@@ -55,6 +56,7 @@ slyhypr/                               # Standalone flake — Sly-Harvey Hyprlan
   flake.nix                            # Pins nixpkgs-unstable + home-manager + many inputs (nixvim, spicetify, etc.)
   hosts/nixvm/                         # VM host — BIOS GRUB, SPICE agents, 1920x1200, KDE fallback
   hosts/nixpc/                         # PC host — AMD GPU, gaming, virtualisation, KDE fallback
+  hosts/nixlap/                        # Laptop host — AMD GPU, Bluetooth, no virtualisation or gaming
   modules/                             # Full Sly-Harvey module tree (core, desktop, programs, themes, scripts)
 ```
 
@@ -179,6 +181,7 @@ sudo nixos-rebuild switch --flake ~/projects/nixmigrate#nixvm
 
 # Apply the Sly-Harvey Hyprland rice instead (pick your host)
 sudo nixos-rebuild switch --flake ~/projects/nixmigrate/slyhypr#nixpc
+sudo nixos-rebuild switch --flake ~/projects/nixmigrate/slyhypr#nixlap
 sudo nixos-rebuild switch --flake ~/projects/nixmigrate/slyhypr#nixvm
 
 # Update all inputs to latest nixpkgs-unstable commit
