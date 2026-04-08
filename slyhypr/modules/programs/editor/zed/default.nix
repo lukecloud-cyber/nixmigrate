@@ -1,0 +1,8 @@
+{ pkgs, ... }:
+{
+  environment.systemPackages = with pkgs; [
+    zed-editor
+    nil
+    nixfmt-tree
+  ];
+}
