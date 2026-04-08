@@ -23,6 +23,11 @@
             }
           ];
           initContent = ''
+            # Switch to fish in interactive terminals
+            if [[ -o interactive && -z "$ZSH_EXECUTION_STRING" && $(ps -o comm= -p $PPID) != "fish" ]]; then
+              exec ${pkgs.fish}/bin/fish
+            fi
+
             fpath=(${pkgs.nix-zsh-completions}/share/zsh/site-functions $fpath)
 
             # Source zsh-defer first, then use it for lazy loading

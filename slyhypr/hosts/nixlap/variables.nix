@@ -17,7 +17,7 @@
   browser = "firefox"; # zen-beta, firefox, floorp
   tuiFileManager = "yazi"; # yazi, lf
   shell = "zsh"; # zsh, bash
-  games = false; # No gaming on laptop
+  games = true;
 
   # Hardware
   hostname = "nixlap";

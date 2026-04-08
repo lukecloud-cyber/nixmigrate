@@ -31,11 +31,7 @@ in
     ../../modules/programs/browser/${vars.browser}
     ../../modules/programs/terminal/${vars.terminal}
     ../../modules/programs/editor/${vars.editor}
-    ../../modules/programs/cli/${vars.tuiFileManager}
-    ../../modules/programs/cli/tmux
-    ../../modules/programs/cli/direnv
-    ../../modules/programs/cli/lazygit
-    ../../modules/programs/cli/btop
+    ../../modules/programs/cli
     ../../modules/programs/media/mpv
     ../../modules/programs/misc/thunar
 
@@ -57,6 +53,7 @@ in
 
   # ── Fish shell (in addition to zsh from variables) ──────────────────
   programs.fish.enable = true;
+  programs.fish.interactiveShellInit = "fastfetch";
 
   # ── Home Manager overrides ────────────────────────────────────────────
   home-manager.sharedModules = [

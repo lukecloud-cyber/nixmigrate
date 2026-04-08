@@ -13,6 +13,7 @@ in
     ./core/fonts.nix
     ./core/hardware.nix
     ./core/network.nix
+    ./core/dns.nix
     ./core/nh.nix
     ./core/packages.nix
     ./core/printing.nix
@@ -33,12 +34,7 @@ in
     ./programs/browser/${vars.browser} # Set browser defined in variables.nix
     ./programs/terminal/${vars.terminal} # Set terminal defined in variables.nix
     ./programs/editor/${vars.editor} # Set editor defined in variables.nix
-    ./programs/cli/${vars.tuiFileManager} # Set file-manager defined in variables.nix
-    ./programs/cli/tmux
-    ./programs/cli/direnv
-    ./programs/cli/lazygit
-    ./programs/cli/cava
-    ./programs/cli/btop
+    ./programs/cli
     ./programs/media/discord
     ./programs/media/spicetify
     # ./programs/media/youtube-music

@@ -4,8 +4,6 @@
     # AI tools
     claude-code
     gemini-cli
-    mcp-nixos
-
     # Apps
     bitwarden-desktop
     obsidian

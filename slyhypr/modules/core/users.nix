@@ -30,6 +30,9 @@ in
         username = "${username}";
         homeDirectory = "/home/${username}";
         stateVersion = "26.05"; # Do not change!
+        packages = with pkgs; [
+          mcp-nixos
+        ];
         sessionVariables = {
           EDITOR =
             if (editor == "nixvim" || editor == "neovim" || editor == "nvchad") then

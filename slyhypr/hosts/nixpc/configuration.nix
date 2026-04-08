@@ -33,12 +33,7 @@ in
     ../../modules/programs/browser/${vars.browser}
     ../../modules/programs/terminal/${vars.terminal}
     ../../modules/programs/editor/${vars.editor}
-    ../../modules/programs/cli/${vars.tuiFileManager}
-    ../../modules/programs/cli/tmux
-    ../../modules/programs/cli/direnv
-    ../../modules/programs/cli/lazygit
-    ../../modules/programs/cli/cava
-    ../../modules/programs/cli/btop
+    ../../modules/programs/cli
     ../../modules/programs/media/discord
     ../../modules/programs/media/spicetify
     ../../modules/programs/media/mpv
@@ -72,6 +67,7 @@ in
 
   # ── Fish shell (in addition to zsh from variables) ──────────────────
   programs.fish.enable = true;
+  programs.fish.interactiveShellInit = "fastfetch";
 
   system.stateVersion = lib.mkForce "24.11";
 }
