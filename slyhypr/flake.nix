@@ -108,6 +108,7 @@
         Default = mkHost "Default";
         nixvm = mkHost "nixvm";
         nixpc = mkHost "nixpc";
+        nixlap = mkHost "nixlap";
       };
     };
 }
