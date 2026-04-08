@@ -118,14 +118,33 @@ Reboot to pick up all changes (new user, bootloader, services, etc.).
 The rebuild creates the `luke` account but `initialPassword` may not take effect reliably. Boot the NixOS ISO again and set the password manually:
 
 1. Boot the NixOS installer ISO
-2. Open a terminal and mount your installed system:
+2. Open a terminal and find your disk layout: `lsblk -f`
+3. Mount your installed system and set the password:
+
+**Unencrypted drive:**
 
 ```bash
-sudo mount /dev/vda1 /mnt        # adjust device name for your disk (use lsblk -f to check)
+sudo mount /dev/vda1 /mnt        # adjust device name for your disk
 sudo nixos-enter --root /mnt
 passwd luke
 exit
 sudo umount /mnt
+reboot
+```
+
+**LUKS-encrypted drive:**
+
+```bash
+# Decrypt the LUKS partition (adjust device to match your disk)
+sudo cryptsetup luksOpen /dev/nvme0n1p2 cryptroot
+sudo mount /dev/mapper/cryptroot /mnt
+sudo mount /dev/nvme0n1p1 /mnt/boot    # mount boot partition too
+sudo nixos-enter --root /mnt
+passwd luke
+exit
+sudo umount /mnt/boot
+sudo umount /mnt
+sudo cryptsetup luksClose cryptroot
 reboot
 ```
 
