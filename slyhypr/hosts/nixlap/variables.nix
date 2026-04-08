@@ -14,7 +14,7 @@
   # Default Applications
   terminal = "kitty"; # kitty, alacritty
   editor = "neovim"; # nixvim, vscode, helix, doom-emacs, nvchad, neovim
-  browser = "firefox"; # zen-beta, firefox, floorp
+  browser = "brave"; # zen-beta, firefox, floorp, brave
   tuiFileManager = "yazi"; # yazi, lf
   shell = "zsh"; # zsh, bash
   games = true;
