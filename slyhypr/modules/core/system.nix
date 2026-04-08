@@ -39,7 +39,7 @@ in
       trusted-users = [ "root" "@wheel" ]; # Required by Cachix to be used as non-root user
       accept-flake-config = true;
       builders-use-substitutes = true;
-      download-buffer-size = 200000000;
+      download-buffer-size = 1073741824; # 1 GiB
       auto-optimise-store = true; # May make rebuilds longer but less size
       substituters = [
         "https://cache.nixos.org/"
