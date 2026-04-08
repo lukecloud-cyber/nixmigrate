@@ -81,7 +81,7 @@ pkgs.writeShellScriptBin "keybinds-yad" ''
     "SUPER SHIFT Q" "Open notification panel" "swaync-client -t -sw" \
     "SUPER Q" "Close active window" "killactive" \
     "ALT F4" "Force kill active window" "forcekillactive" \
-    "SUPER Z" "Launch emoji picker" "launcher emoji" \
+    "SUPER Z" "Launch Zed editor" "zeditor" \
     "SUPER ALT K" "Change keyboard layout" "keyboardswitch" \
     "SUPER U" "Rebuild system" "$_terminal -e rebuild" \
     "SUPER ALT G" "Enable game mode" "gamemode" \

@@ -452,7 +452,7 @@ in
               "$mainMod, A, exec, launcher drun" # launch desktop applications
               "$mainMod, SPACE, exec, launcher drun" # launch desktop applications
               "$mainMod SHIFT, W, exec, launcher wallpaper" # launch wallpaper switcher
-              "$mainMod, Z, exec, launcher emoji" # launch emoji picker
+              "$mainMod, Z, exec, zeditor" # launch zed editor
               "$mainMod SHIFT, T, exec, launcher tmux" # launch tmux sessions
               "$mainMod, G, exec, launcher games" # game launcher
               # "$mainMod, tab, exec, launcher window" # switch between desktop applications
